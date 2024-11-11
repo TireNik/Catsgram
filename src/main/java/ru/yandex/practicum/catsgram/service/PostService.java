@@ -3,12 +3,11 @@ package ru.yandex.practicum.catsgram.service;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.catsgram.exception.ConditionsNotMetException;
 import ru.yandex.practicum.catsgram.exception.NotFoundException;
+import ru.yandex.practicum.catsgram.exception.PostNotFoundException;
 import ru.yandex.practicum.catsgram.model.Post;
 
 import java.time.Instant;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class PostService {
@@ -19,8 +18,23 @@ public class PostService {
         this.userService = userService;
     }
 
-    public Collection<Post> findAll() {
-        return posts.values();
+    public Collection<Post> findAll(int size, SortOrder sort, int from) {
+        return posts.values().stream()
+                .sorted((p1, p2) -> {
+                    if (sort == sort.ASCENDING) {
+                        return p1.getPostDate().compareTo(p2.getPostDate());
+                    } else {
+                        return p2.getPostDate().compareTo(p1.getPostDate());
+                    }
+                })
+                .skip(from)
+                .limit(size)
+                .toList();
+    }
+
+    public Optional<Post> findById(Long id) {
+       return Optional.ofNullable(Optional.ofNullable(posts.get(id))
+               .orElseThrow(() -> new PostNotFoundException("Пост с " + id + " не найден")));
     }
 
     public Post create(Post post) {
