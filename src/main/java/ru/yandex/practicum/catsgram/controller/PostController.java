@@ -24,7 +24,7 @@ public class PostController {
                                     @RequestParam(defaultValue = "desc") String sort,
                                     @RequestParam(defaultValue = "0") int from) {
         SortOrder sortOrder = SortOrder.from(sort);
-        return postService.findAll(size, sortOrder, size);
+        return postService.findAll(size, sortOrder, from);
     }
 
     @GetMapping("/posts/{id}")
@@ -34,7 +34,7 @@ public class PostController {
 
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
+//    @ResponseStatus(HttpStatus.CREATED)
     public Post create(@RequestBody Post post) {
         return postService.create(post);
     }

@@ -4,10 +4,10 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Data
-@EqualsAndHashCode(of = { "id" })
+//@EqualsAndHashCode(of = { "id" })
 public class Image {
-    Long id;
-    Long postId;
-    String originalFileName;
-    String filePath;
+   private Long id;
+   private long postId;
+   private String originalFileName;
+   private String filePath;
 }
