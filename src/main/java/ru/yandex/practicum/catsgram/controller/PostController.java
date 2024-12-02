@@ -24,7 +24,7 @@ public class PostController {
                                     @RequestParam(defaultValue = "desc") String sort,
                                     @RequestParam(defaultValue = "0") int from) {
         SortOrder sortOrder = SortOrder.from(sort);
-        if (size <= 0 ) {
+        if (size <= 0) {
             throw new ParameterNotValidException(
                     String.valueOf(size),
                     "Некорректный размер выборки. Размер должен быть больше нуля");
@@ -38,7 +38,7 @@ public class PostController {
     }
 
     @GetMapping("/posts/{id}")
-    public Optional<Post> findById (@PathVariable Long id) {
+    public Optional<Post> findById(@PathVariable Long id) {
         return postService.findById(id);
     }
 

@@ -45,7 +45,7 @@ public class UserService {
 
         User oldUser = users.get(user.getId());
 
-        if (isEmailUsed(user.getEmail(), user.getId())){
+        if (isEmailUsed(user.getEmail(), user.getId())) {
             throw new DuplicatedDataException("Этот имейл уже используется");
         }
 

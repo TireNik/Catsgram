@@ -14,32 +14,32 @@ public class ErrorHandler {
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ErrorResponse handelNotFoundException (final NotFoundException e) {
+    public ErrorResponse handelNotFoundException(final NotFoundException e) {
         return new ErrorResponse("Некорректное значение", e.getMessage());
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.CONFLICT)
-    public ErrorResponse handelDuplicatedDataException (final DuplicatedDataException e) {
+    public ErrorResponse handelDuplicatedDataException(final DuplicatedDataException e) {
         return new ErrorResponse("Некорректное значение", e.getMessage());
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
-    public ErrorResponse handelConditionsNotMetException (final ConditionsNotMetException e) {
+    public ErrorResponse handelConditionsNotMetException(final ConditionsNotMetException e) {
         return new ErrorResponse("Некорректное значение", e.getMessage());
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
-    public ErrorResponse handelParameterNotValidException (final ParameterNotValidException e) {
+    public ErrorResponse handelParameterNotValidException(final ParameterNotValidException e) {
         return new ErrorResponse("Некорректное значение параметра " + e.getParameter(),
                 e.getReason());
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ErrorResponse handelThrowable (final Throwable e) {
+    public ErrorResponse handelThrowable(final Throwable e) {
         return new ErrorResponse("Произошла непредвиденная ошибка. ", e.getMessage());
     }
 }

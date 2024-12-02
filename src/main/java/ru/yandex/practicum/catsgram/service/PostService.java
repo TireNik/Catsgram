@@ -33,17 +33,17 @@ public class PostService {
     }
 
     public Optional<Post> findById(Long id) {
-       return Optional.ofNullable(Optional.ofNullable(posts.get(id))
-               .orElseThrow(() -> new PostNotFoundException("Пост с " + id + " не найден")));
+        return Optional.ofNullable(Optional.ofNullable(posts.get(id))
+                .orElseThrow(() -> new PostNotFoundException("Пост с " + id + " не найден")));
     }
 
     public Post create(Post post) {
-        if(post.getDescription() == null || post.getDescription().isBlank()) {
+        if (post.getDescription() == null || post.getDescription().isBlank()) {
             throw new ConditionsNotMetException("Описание не может быть пустым");
         }
 
         Long authorId = post.getAuthorId();
-        if(userService.findUserById(authorId).isEmpty()){
+        if (userService.findUserById(authorId).isEmpty()) {
             throw new ConditionsNotMetException("Автор с id = " + authorId + " не найден");
         }
 
@@ -54,7 +54,7 @@ public class PostService {
     }
 
     public Post update(Post newPost) {
-        if(newPost.getId() == null) {
+        if (newPost.getId() == null) {
             throw new ConditionsNotMetException("Id должен быть указан");
         }
         if (posts.containsKey(newPost.getId())) {

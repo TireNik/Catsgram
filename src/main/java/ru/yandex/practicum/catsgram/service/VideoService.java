@@ -43,7 +43,7 @@ public class VideoService {
 
     public byte[] loadFile(Video video) {
         Path path = Paths.get(video.getFilePath());
-        if(Files.exists(path)) {
+        if (Files.exists(path)) {
             try {
                 return Files.readAllBytes(path);
             } catch (IOException e) {

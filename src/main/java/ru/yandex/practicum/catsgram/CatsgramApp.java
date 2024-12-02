@@ -1,5 +1,7 @@
 package ru.yandex.practicum.catsgram;
 
+
+
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import org.springframework.boot.SpringApplication;
