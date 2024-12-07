@@ -1,0 +1,57 @@
+
+services:
+  db:
+    image: postgres:16.1
+    container_name: postgres
+    ports:
+      - "6432:5432" # Внешний порт совпадает с портом контейнера
+    volumes:
+      - ./volumes/postgres:/var/lib/postgresql/data # Для сохранения данных
+    environment:
+      - POSTGRES_DB=catsgram
+      - POSTGRES_USER=dbuser
+      - POSTGRES_PASSWORD=12345
+    healthcheck:
+      test: pg_isready -q -d catsgram -U dbuser
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  db-init:
+    image: postgres:16.1
+    container_name: db-init
+    depends_on:
+      db:
+        condition: service_healthy
+    entrypoint:
+      - bash
+      - -c
+      - |
+        set -e
+        PGPASSWORD=12345 psql -h db -U dbuser -d catsgram -v ON_ERROR_STOP=1 <<-EOSQL
+          CREATE TABLE IF NOT EXISTS users (
+            id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+            username VARCHAR(40) NOT NULL,
+            email VARCHAR(255) NOT NULL,
+            password VARCHAR(40) NOT NULL,
+            registration_date TIMESTAMP WITH TIME ZONE NOT NULL
+          );
+        
+          CREATE TABLE IF NOT EXISTS posts (
+            id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+            author_id BIGINT NOT NULL REFERENCES users(id),
+            description TEXT,
+            post_date TIMESTAMP WITH TIME ZONE NOT NULL
+          );
+        
+          CREATE TABLE IF NOT EXISTS image_storage (
+            id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+            original_name VARCHAR(255),
+            file_path VARCHAR(1024),
+            post_id BIGINT NOT NULL REFERENCES posts(id)
+          );
+        EOSQL
+    restart: "no"
+
+volumes:
+  postgres:

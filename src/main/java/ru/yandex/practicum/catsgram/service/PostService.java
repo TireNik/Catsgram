@@ -42,11 +42,6 @@ public class PostService {
             throw new ConditionsNotMetException("Описание не может быть пустым");
         }
 
-        Long authorId = post.getAuthorId();
-        if (userService.findUserById(authorId).isEmpty()) {
-            throw new ConditionsNotMetException("Автор с id = " + authorId + " не найден");
-        }
-
         post.setId(getNextId());
         post.setPostDate(Instant.now());
         posts.put(post.getId(), post);
