@@ -34,7 +34,7 @@ public class ImageService {
     private final PostRepository postRepository;
 
     @Value("${catsgram.image-directory}")
-    private String imageDirectory;
+    private final String imageDirectory;
 
     public List<ImageUploadResponse> saveImages(long postId, List<MultipartFile> files) {
         return files.stream().map(file -> saveImage(postId, file)).collect(Collectors.toList());
