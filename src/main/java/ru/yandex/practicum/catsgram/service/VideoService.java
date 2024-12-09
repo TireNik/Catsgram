@@ -31,8 +31,8 @@ public class VideoService {
     private final PostRepository postRepository;
     private final VideoRepository videoRepository;
 
-    @Value("${catsgram.image-directory}")
-    private final String videoDirectory;
+    @Value("${catsgram.video-directory}")
+    private String videoDirectory;
 
     public VideoData getVideoData(long videoId) {
         Video video = videoRepository.findById(videoId)
